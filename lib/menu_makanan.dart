@@ -142,3 +142,72 @@ class _MenuMakananState extends State<MenuMakanan>
       ),
     );
   }
+
+  Widget _buildMenuCard(String title, String imageUrl, String price) {
+    return Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            Image.network(
+              imageUrl,
+              width: 100.0,
+              height: 100.0,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(width: 16.0),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    price,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      _addToCart(title, imageUrl, price);
+                    },
+                    icon: Icon(Icons.add_shopping_cart),
+                    label: Text('Tambahkan'),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.orange,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _addToCart(String title, String imageUrl, String price) {
+    setState(() {
+      _cartItems.add({
+        'title': title,
+        'imageUrl': imageUrl,
+        'price': price,
+      });
+    });
+    _saveCartItems();
+  }
+}
